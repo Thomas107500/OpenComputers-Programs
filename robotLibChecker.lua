@@ -10,4 +10,4 @@ if(not fs.exists("/home/robotlib/robotCommon.lua")) then
     print("Missing robotCommon.lua...")
     counter = counter + 1
 end
-    print("Total of ".. counter .. "missing file detected!")
+    print("Total of ".. counter .. " missing file detected!")
