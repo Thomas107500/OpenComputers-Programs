@@ -9,31 +9,31 @@ if (not component.isAvailable("internet")) then
     return nil
 end
 
-print("Checking for missing files on /home/robotlib directory...")
+print("Checking for missing files on /usr/lib directory...")
 
-if(not fs.exists("/home/robotlib/robotCommon.lua")) then
+if(not fs.exists("/usr/lib/robotCommon.lua")) then
     
     print("Missing robotCommon.lua...")
-    fs.makeDirectory("/home/robotlib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/robotCommon.lua /home/robotlib/robotCommon.lua")
+    fs.makeDirectory("/usr/lib")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/robotCommon.lua /usr/lib/robotCommon.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
 end
 
-if(not fs.exists("/home/robotlib/vector3.lua")) then
+if(not fs.exists("/usr/lib/vector3.lua")) then
     print("Missing vector3.lua...")
-    fs.makeDirectory("/home/robotlib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /home/robotlib/vector3.lua")
+    fs.makeDirectory("/usr/lib")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /usr/lib/vector3.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
 end
 
-if(not fs.exists("/home/robotlib/common.lua")) then
+if(not fs.exists("/usr/lib/common.lua")) then
     print("Missing common.lua...")
-    fs.makeDirectory("/home/robotlib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /home/robotlib/common.lua")
+    fs.makeDirectory("/usr/lib")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /usr/lib/common.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
