@@ -4,7 +4,7 @@ local shell = require("shell")
 
 print("Running library installer for robots...")
 
-if (not component.exists("internet")) then
+if (not component.isAvailable("internet")) then
     print("An internet card is required for this program to function...")
     return nil
 end
