@@ -29,6 +29,7 @@ if(not fs.exists("/home/robotlib/vector3.lua")) then
         print("An error occurred during download: " .. err)
     end
 end
+
 if(not fs.exists("/home/robotlib/common.lua")) then
     print("Missing common.lua...")
     fs.makeDirectory("/home/robotlib")
