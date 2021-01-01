@@ -2,6 +2,8 @@ local fs = require("filesystem")
 local component = require("component")
 local shell = require("shell")
 
+local args,options = shell.parse()
+
 print("Running library installer for robots...")
 
 if (not component.isAvailable("internet")) then
@@ -11,9 +13,9 @@ end
 
 print("Checking for missing files on /usr/lib directory...")
 
-if(not fs.exists("/usr/lib/robotCommon.lua")) then
+if(not fs.exists("/usr/lib/robotCommon.lua") or options.u) then
     
-    print("Missing robotCommon.lua...")
+    print("Downloading robotCommon.lua...")
     fs.makeDirectory("/usr/lib")
     local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/robotCommon.lua /usr/lib/robotCommon.lua")
     if(status == false) then
@@ -21,8 +23,8 @@ if(not fs.exists("/usr/lib/robotCommon.lua")) then
     end
 end
 
-if(not fs.exists("/usr/lib/vector3.lua")) then
-    print("Missing vector3.lua...")
+if(not fs.exists("/usr/lib/vector3.lua") or options.u) then
+    print("Downloading vector3.lua...")
     fs.makeDirectory("/usr/lib")
     local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /usr/lib/vector3.lua")
     if(status == false) then
@@ -30,8 +32,8 @@ if(not fs.exists("/usr/lib/vector3.lua")) then
     end
 end
 
-if(not fs.exists("/usr/lib/common.lua")) then
-    print("Missing common.lua...")
+if(not fs.exists("/usr/lib/common.lua") or options.u) then
+    print("Downloading common.lua...")
     fs.makeDirectory("/usr/lib")
     local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /usr/lib/common.lua")
     if(status == false) then
