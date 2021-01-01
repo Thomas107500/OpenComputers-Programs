@@ -8,15 +8,10 @@ local z = commonlib.input("Please input the current Z coordinate: ")
 local facing = commonlib.input("Please input the current facing(1:north,2:east,3:south,4:west): ")
 
 function init() 
-    local f
-    fs.makeDirectory("/home/data/coords.lua")
-    local status, err = pcall(function() f = io.open("/home/data/coords.lua","w") end)
-    if (status) then
-        f.write(x.. "\n" .. y .. "\n" .. z .."\n" .. facing)
-        f.close()
-    else
-        print("An error occurred when writing: ".. err)
-    end
+    fs.makeDirectory("/home/data")
+    local f = io.open("/home/data/coords", "w")
+    f:write(x.. "\n" .. y .. "\n" .. z .."\n" .. facing)
+    f:close()
 end
 
 local status, err = pcall(init())

@@ -2,7 +2,7 @@ local fs = require("filesystem")
 local component = require("component")
 local shell = require("shell")
 
-local args,options = shell.parse()
+local args,options = shell.parse(...)
 
 print("Running library installer for robots...")
 
