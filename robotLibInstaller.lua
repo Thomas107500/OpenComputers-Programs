@@ -19,15 +19,17 @@ if(not fs.exists("/home/robotlib/robotCommon.lua")) then
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
+end
 
-elseif(not fs.exists("/home/robotlib/vector3.lua")) then
+if(not fs.exists("/home/robotlib/vector3.lua")) then
     print("Missing vector3.lua...")
     fs.makeDirectory("/home/robotlib")
     local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /home/robotlib/vector3.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
-elseif(not fs.exists("/home/robotlib/common.lua")) then
+end
+if(not fs.exists("/home/robotlib/common.lua")) then
     print("Missing common.lua...")
     fs.makeDirectory("/home/robotlib")
     local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /home/robotlib/common.lua")
@@ -35,3 +37,5 @@ elseif(not fs.exists("/home/robotlib/common.lua")) then
         print("An error occurred during download: " .. err)
     end
 end
+
+print("Process Completed...")
