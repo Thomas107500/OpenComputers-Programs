@@ -14,7 +14,7 @@ function init()
     f:close()
 end
 
-local status, err = pcall(init())
+local status, err = pcall(init)
 
 if(status) then
     print("Initialization Complete...")
