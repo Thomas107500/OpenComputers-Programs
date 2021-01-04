@@ -84,6 +84,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
             end
         end
     end    
+    return Vector3_destination,currentFacing
 end
 
 function robotCommon.pointTo(targetFacing,currentFacing)
