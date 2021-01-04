@@ -130,28 +130,28 @@ end
 
 function robotCommon.getCoord()
     local f
-    local status,value = pcall(function() f = io.read("/home/data/coords", "r") end)
+    local status,value = pcall(function() f = io.open("/home/data/coords", "r") end)
 
     if(status) then
-        local Vector3_current = {f:read(),f:read(),f:read()}
-        local facing = f:read()
+        local Vector3_current = {tonumber(f:read()),tonumber(f:read()),tonumber(f:read())}
+        local facing = tonumber(f:read())
         f:close()
         return Vector3_current,facing
     else
-        print("An error occurred: ".. value)
+        print("An error occurred when calling getCoord: ".. value)
     end
 end
 
 function robotCommon.storeCoord(Vector3_current,facing)
     local f
-    local status,value = pcall(function() f = io.read("/home/data/coords", "w") end)
+    local status,value = pcall(function() f = io.open("/home/data/coords", "w") end)
 
     if(status) then
         f:write(Vector3_current[1] .. "\n" .. Vector3_current[2] .. "\n" .. Vector3_current[3] .. "\n" .. facing)
         f:close()
         return true
     else
-        print("An error occurred: ".. value)
+        print("An error occurred when calling storeCoord: ".. value)
         return false
     end
 end
