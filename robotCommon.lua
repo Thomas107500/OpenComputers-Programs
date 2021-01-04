@@ -6,11 +6,12 @@ local vec3 = require("vector3")
 --North:-Z, East:+X, South:+Z, West:-X
 function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, bool_clearPath)
     local Vector3_toMove = vec3.vector3Minus(Vector3_destination, Vector3_current)
-
+    --print("toMove: ".. "X:" .. Vector3_toMove[1] .. "Y:" .. Vector3_toMove[1] .. "Z:" .. Vector3_toMove[1])
+    --print("currentCoord: ".. "X:" .. Vector3_current[1] .. "Y:" .. Vector3_current[1] .. "Z:" .. Vector3_current[1])
     while(math.abs(Vector3_toMove[1]) > 0 and math.abs(Vector3_toMove[2]) > 0 and math.abs(Vector3_toMove[3]) > 0) do
         for i = 1, math.abs(Vector3_toMove[1]) do
             if(Vector3_toMove[1] < 0) then
-                robotCommon.pointTo(4,currentFacing)
+                currentFacing = robotCommon.pointTo(currentFacing,4)
                 if (robot.forward() == false) then
                     if(bool_clearPath) then
                         robot.swing()
@@ -21,7 +22,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                     Vector3_toMove[1] = Vector3_toMove[1] + 1
                 end
             else
-                robotCommon.pointTo(2,currentFacing)
+                currentFacing = robotCommon.pointTo(currentFacing,2)
                 if (robot.forward() == false) then
                     if(bool_clearPath) then
                         robot.swing()
@@ -60,7 +61,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
     
         for i = 1, math.abs(Vector3_toMove[3]) do
             if(Vector3_toMove[3] < 0) then
-                robotCommon.pointTo(1,currentFacing)
+                currentFacing = robotCommon.pointTo(currentFacing,1)
                 if (robot.forward() == false) then
                     if(bool_clearPath) then
                         robot.swing()
@@ -71,7 +72,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                     Vector3_toMove[3] = Vector3_toMove[3] + 1
                 end
             else
-                robotCommon.pointTo(3,currentFacing)
+                currentFacing = robotCommon.pointTo(currentFacing,3)
                 if (robot.forward() == false) then
                     if(bool_clearPath) then
                         robot.swing()
@@ -87,7 +88,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
     return Vector3_destination,currentFacing
 end
 
-function robotCommon.pointTo(targetFacing,currentFacing)
+function robotCommon.pointTo(currentFacing,targetFacing)
     if (targetFacing - currentFacing == -3) then
         robot.turnRight()
         return targetFacing
@@ -134,7 +135,7 @@ function robotCommon.getCoord()
     local status,value = pcall(function() f = io.open("/home/data/coords", "r") end)
 
     if(status) then
-        local Vector3_current = {tonumber(f:read()),tonumber(f:read()),tonumber(f:read())}
+        local Vector3_current = {tonumber(f:read("*l")),tonumber(f:read("*l")),tonumber(f:read("*l"))}
         local facing = tonumber(f:read())
         f:close()
         return Vector3_current,facing
