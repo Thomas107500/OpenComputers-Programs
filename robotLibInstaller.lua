@@ -17,7 +17,7 @@ if(not fs.exists("/usr/lib/robotCommon.lua") or options.u) then
     
     print("Downloading robotCommon.lua...")
     fs.makeDirectory("/usr/lib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/robotCommon.lua /usr/lib/robotCommon")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/robotCommon.lua /usr/lib/robotCommon.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
@@ -26,7 +26,7 @@ end
 if(not fs.exists("/usr/lib/vector3.lua") or options.u) then
     print("Downloading vector3.lua...")
     fs.makeDirectory("/usr/lib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /usr/lib/vector3")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/vector3.lua /usr/lib/vector3.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
@@ -35,7 +35,7 @@ end
 if(not fs.exists("/usr/lib/common.lua") or options.u) then
     print("Downloading common.lua...")
     fs.makeDirectory("/usr/lib")
-    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /usr/lib/common")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/common.lua /usr/lib/common.lua")
     if(status == false) then
         print("An error occurred during download: " .. err)
     end
