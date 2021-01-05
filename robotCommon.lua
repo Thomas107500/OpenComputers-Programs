@@ -12,7 +12,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
         for i = 1, math.abs(Vector3_toMove[1]) do
             if(Vector3_toMove[1] < 0) then
                 currentFacing = robotCommon.pointTo(currentFacing,4)
-                if (robot.forward() == false) then
+                if (robot.forward() == nil) then
                     if(bool_clearPath) then
                         robot.swing()
                     else
@@ -23,7 +23,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                 end
             else
                 currentFacing = robotCommon.pointTo(currentFacing,2)
-                if (robot.forward() == false) then
+                if (robot.forward() == nil) then
                     if(bool_clearPath) then
                         robot.swing()
                     else
@@ -35,9 +35,9 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
             end
         end
     
-        for i = 1, math.abs(Vector3_toMove[2]) do
+        for j = 1, math.abs(Vector3_toMove[2]) do
             if(Vector3_toMove[2] < 0) then
-                if (robot.down() == false) then
+                if (robot.down() == nil) then
                     if(bool_clearPath) then
                         robot.swingDown()
                     else
@@ -47,7 +47,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                     Vector3_toMove[2] = Vector3_toMove[2] + 1
                 end
             else
-                if (robot.up() == false) then
+                if (robot.up() == nil) then
                     if(bool_clearPath) then
                         robot.swingUp()
                     else
@@ -59,10 +59,10 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
             end
         end
     
-        for i = 1, math.abs(Vector3_toMove[3]) do
+        for k = 1, math.abs(Vector3_toMove[3]) do
             if(Vector3_toMove[3] < 0) then
                 currentFacing = robotCommon.pointTo(currentFacing,1)
-                if (robot.forward() == false) then
+                if (robot.forward() == nil) then
                     if(bool_clearPath) then
                         robot.swing()
                     else
@@ -73,7 +73,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                 end
             else
                 currentFacing = robotCommon.pointTo(currentFacing,3)
-                if (robot.forward() == false) then
+                if (robot.forward() == nil) then
                     if(bool_clearPath) then
                         robot.swing()
                     else
