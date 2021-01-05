@@ -96,12 +96,12 @@ function robotCommon.pointTo(currentFacing,targetFacing)
         robot.turnLeft()
         return targetFacing
     elseif(targetFacing - currentFacing > 0) then
-        for i = 1, targetFacing - currentFacing do
+        for l = 1, targetFacing - currentFacing do
             robot.turnRight()
         end
         return targetFacing
     else
-        for i = 1, math.abs(targetFacing - currentFacing) do
+        for m = 1, math.abs(targetFacing - currentFacing) do
             robot.turnLeft()
         end
         return targetFacing
