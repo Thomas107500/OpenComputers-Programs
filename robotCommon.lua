@@ -8,7 +8,7 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
     local Vector3_toMove = vec3.vector3Minus(Vector3_destination, Vector3_current)
     --print("toMove: ".. "X:" .. Vector3_toMove[1] .. "Y:" .. Vector3_toMove[1] .. "Z:" .. Vector3_toMove[1])
     --print("currentCoord: ".. "X:" .. Vector3_current[1] .. "Y:" .. Vector3_current[1] .. "Z:" .. Vector3_current[1])
-    while(math.abs(Vector3_toMove[1]) > 0 and math.abs(Vector3_toMove[2]) > 0 and math.abs(Vector3_toMove[3]) > 0) do
+    while(math.abs(Vector3_toMove[1]) > 0 or math.abs(Vector3_toMove[2]) > 0 or math.abs(Vector3_toMove[3]) > 0) do
         for i = 1, math.abs(Vector3_toMove[1]) do
             if(Vector3_toMove[1] < 0) then
                 currentFacing = robotCommon.pointTo(currentFacing,4)
@@ -131,29 +131,31 @@ function robotCommon.turn(String_direction,currentFacing)
 end
 
 function robotCommon.getCoord()
-    local f
-    local status,value = pcall(function() f = io.open("/home/data/coords", "r") end)
+    local f = io.open("/home/data/coords", "r")
 
-    if(status) then
+    if(f) then
         local Vector3_current = {tonumber(f:read("*l")),tonumber(f:read("*l")),tonumber(f:read("*l"))}
         local facing = tonumber(f:read())
         f:close()
+        print("inside: " .. Vector3_current[1])
+        print("inside: " .. Vector3_current[2])
+        print("inside: " .. Vector3_current[3])
+        print("inside: " .. facing)
         return Vector3_current,facing
     else
-        print("An error occurred when calling getCoord: ".. value)
+        print("Error: f is nil in getCoord()")
     end
 end
 
 function robotCommon.storeCoord(Vector3_current,facing)
-    local f
-    local status,value = pcall(function() f = io.open("/home/data/coords", "w") end)
+    local f = io.open("/home/data/coords", "w")
 
-    if(status) then
+    if(f) then
         f:write(Vector3_current[1] .. "\n" .. Vector3_current[2] .. "\n" .. Vector3_current[3] .. "\n" .. facing)
         f:close()
         return true
     else
-        print("An error occurred when calling storeCoord: ".. value)
+        print("f is nil in storeCoord()")
         return false
     end
 end
