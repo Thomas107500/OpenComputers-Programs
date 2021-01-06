@@ -6,8 +6,6 @@ local vec3 = require("vector3")
 --North:-Z, East:+X, South:+Z, West:-X
 function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, bool_clearPath)
     local Vector3_toMove = vec3.vector3Minus(Vector3_destination, Vector3_current)
-    --print("toMove: ".. "X:" .. Vector3_toMove[1] .. "Y:" .. Vector3_toMove[1] .. "Z:" .. Vector3_toMove[1])
-    --print("currentCoord: ".. "X:" .. Vector3_current[1] .. "Y:" .. Vector3_current[1] .. "Z:" .. Vector3_current[1])
     while(math.abs(Vector3_toMove[1]) > 0 or math.abs(Vector3_toMove[2]) > 0 or math.abs(Vector3_toMove[3]) > 0) do
         for i = 1, math.abs(Vector3_toMove[1]) do
             if(Vector3_toMove[1] < 0) then
@@ -137,10 +135,6 @@ function robotCommon.getCoord()
         local Vector3_current = {tonumber(f:read("*l")),tonumber(f:read("*l")),tonumber(f:read("*l"))}
         local facing = tonumber(f:read())
         f:close()
-        print("inside: " .. Vector3_current[1])
-        print("inside: " .. Vector3_current[2])
-        print("inside: " .. Vector3_current[3])
-        print("inside: " .. facing)
         return Vector3_current,facing
     else
         print("Error: f is nil in getCoord()")
