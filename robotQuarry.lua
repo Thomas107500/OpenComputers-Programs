@@ -4,6 +4,8 @@ local commonlib = require("common")
 local robot = require("robot")
 
 --Note: point start is the starting point of mining not for drop off
+--Prerequisit: make sure robots is able to access to dropoff on the surface, else it will disrupt pathing(non fatal)
+
 local Vector3_start = vec3.vec3Input("Please enter coordinate of the starting point(closer to the robot):")
 local Vector3_end = vec3.vec3Input("Please enter coordinate of the ending point(further from the robot):")
 
@@ -26,7 +28,7 @@ for i = 0, vec3.getMagnitude(Vector3_toMove) - 1 do
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, Vector3_next,currentFacing, false)
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, getBottom(Vector3_next),currentFacing, true)
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, getBottom(Vector3_start),currentFacing, true)
-    Vector3_current,currentFacing = robotcommon.move(Vector3_current, Vector3_dropOff,currentFacing, false)
+    Vector3_current,currentFacing = robotcommon.move(Vector3_current, Vector3_dropOff,currentFacing, true)
     for i = 2,16 do
         robot.select(i)
         while(robot.count(i) ~= 0) do
@@ -35,3 +37,5 @@ for i = 0, vec3.getMagnitude(Vector3_toMove) - 1 do
     end
     robot.select(1)
 end
+
+robotcommon.storeCoord(Vector3_current, currentFacing)
