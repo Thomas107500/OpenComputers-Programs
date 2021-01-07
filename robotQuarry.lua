@@ -24,7 +24,7 @@ for i = 0, vec3.getMagnitude(Vector3_toMove) - 1 do
     local Vector3_next = vec3.vector3Add(Vector3_start, vec3.vector3ScalarMul(vec3.getUnitVector(Vector3_toMove),i))
     
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, Vector3_next,currentFacing, false)
-    Vector3_current,currentFacing = robotcommon.move(Vector3_current, getBottom(Vector3_next),currentFacing, false)
+    Vector3_current,currentFacing = robotcommon.move(Vector3_current, getBottom(Vector3_next),currentFacing, true)
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, getBottom(Vector3_start),currentFacing, true)
     Vector3_current,currentFacing = robotcommon.move(Vector3_current, Vector3_dropOff,currentFacing, false)
     for i = 2,16 do
