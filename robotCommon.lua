@@ -4,6 +4,8 @@ local robot = require("robot")
 local vec3 = require("vector3")
 
 --North:-Z, East:+X, South:+Z, West:-X
+--todo: robots dont move after swinging so it just mines the block and try to move on another axis
+--todo: robots cannot find alternate route and will be stuck if there is only one axis of movement left but that axis is blocked while clearPath is false
 function robotCommon.move(Vector3_current, Vector3_destination, currentFacing, bool_clearPath)
     local Vector3_toMove = vec3.vector3Minus(Vector3_destination, Vector3_current)
     local failed = 0
@@ -155,8 +157,7 @@ function robotCommon.turn(String_direction,currentFacing)
         end
         return currentFacing
     else
-        error("Invalid Args")
-        return false
+        error("Invalid Args passed to turn()")
     end
 end
 
