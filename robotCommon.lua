@@ -4,31 +4,40 @@ local robot = require("robot")
 local vec3 = require("vector3")
 
 --North:-Z, East:+X, South:+Z, West:-X
-function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, bool_clearPath)
+function robotCommon.move(Vector3_current, Vector3_destination, currentFacing, bool_clearPath)
     local Vector3_toMove = vec3.vector3Minus(Vector3_destination, Vector3_current)
+    local failed = 0
     while(math.abs(Vector3_toMove[1]) > 0 or math.abs(Vector3_toMove[2]) > 0 or math.abs(Vector3_toMove[3]) > 0) do
         for i = 1, math.abs(Vector3_toMove[1]) do
             if(Vector3_toMove[1] < 0) then
                 currentFacing = robotCommon.pointTo(currentFacing,4)
                 if (robot.forward() == nil) then
                     if(bool_clearPath) then
-                        robot.swing()
+                        if(not robot.swing()) then
+                            failed = failed + 1
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[1] = Vector3_toMove[1] + 1
+                    failed = 0
                 end
             else
                 currentFacing = robotCommon.pointTo(currentFacing,2)
                 if (robot.forward() == nil) then
                     if(bool_clearPath) then
-                        robot.swing()
+                        if(not robot.swing()) then
+                            failed = failed + 1
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[1] = Vector3_toMove[1] - 1
+                    failed = 0
                 end
             end
         end
@@ -37,22 +46,32 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
             if(Vector3_toMove[2] < 0) then
                 if (robot.down() == nil) then
                     if(bool_clearPath) then
-                        robot.swingDown()
+                        if(not robot.swingDown()) then
+                            failed = failed + 1
+                            break
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[2] = Vector3_toMove[2] + 1
+                    failed = 0
                 end
             else
                 if (robot.up() == nil) then
                     if(bool_clearPath) then
-                        robot.swingUp()
+                        if(not robot.swingUp()) then
+                            failed = failed + 1
+                            break
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[2] = Vector3_toMove[2] - 1
+                    failed = 0
                 end
             end
         end
@@ -62,28 +81,41 @@ function robotCommon.move(Vector3_destination, Vector3_current, currentFacing, b
                 currentFacing = robotCommon.pointTo(currentFacing,1)
                 if (robot.forward() == nil) then
                     if(bool_clearPath) then
-                        robot.swing()
+                        if(not robot.swing()) then
+                            failed = failed + 1
+                            break
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[3] = Vector3_toMove[3] + 1
+                    failed = 0
                 end
             else
                 currentFacing = robotCommon.pointTo(currentFacing,3)
                 if (robot.forward() == nil) then
                     if(bool_clearPath) then
-                        robot.swing()
+                        if(not robot.swing()) then
+                            failed = failed + 1
+                            break
+                        end
                     else
+                        failed = failed + 1
                         break
                     end
                 else
                     Vector3_toMove[3] = Vector3_toMove[3] - 1
+                    failed = 0
                 end
             end
         end
+        if (failed > 2) then
+            break
+        end
     end    
-    return Vector3_destination,currentFacing
+    return vec3.vector3Minus(Vector3_destination, Vector3_toMove),currentFacing
 end
 
 function robotCommon.pointTo(currentFacing,targetFacing)
