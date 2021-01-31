@@ -41,4 +41,13 @@ if(not fs.exists("/usr/lib/common.lua") or options.u) then
     end
 end
 
+if(not fs.exists("/usr/lib/queue.lua") or options.u) then
+    print("Downloading queue.lua...")
+    fs.makeDirectory("/usr/lib")
+    local status, err = shell.execute("wget -f https://raw.githubusercontent.com/Thomas107500/OpenComputers-Programs/master/queue.lua /usr/lib/queue.lua")
+    if(status == false) then
+        print("An error occurred during download: " .. err)
+    end
+end
+
 print("Process Completed...")
