@@ -44,4 +44,9 @@ function vector3.vec3Input(String_prompt)
     return Vector3_result
 end
 
+function vector3.vector3Abs(Vector3_vector)
+    local Vector3_result = {math.abs(Vector3_vector[1]), math.abs(Vector3_vector[2]), math.abs(Vector3_vector[3])}
+    return Vector3_result
+end
+
 return vector3
