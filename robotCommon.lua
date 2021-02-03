@@ -3,7 +3,7 @@ local robotCommon = {}
 local robot = require("robot")
 local vec3 = require("vector3")
 
---North:-Z, East:+X, South:+Z, West:-X
+--North(1):-Z, East(2):+X, South(3):+Z, West(4):-X
 --todo: robots dont move after swinging so it just mines the block and try to move on another axis
 --todo: robots cannot find alternate route and will be stuck if there is only one axis of movement left but that axis is blocked while clearPath is false
 function robotCommon.move(Vector3_current, Vector3_destination, currentFacing, bool_clearPath)
@@ -138,7 +138,6 @@ function robotCommon.pointTo(currentFacing,targetFacing)
         end
         return targetFacing
     end
-
 end
 
 function robotCommon.turn(String_direction,currentFacing)
@@ -159,6 +158,36 @@ function robotCommon.turn(String_direction,currentFacing)
     else
         error("Invalid Args passed to turn()")
     end
+end
+--North(1):-Z, East(2):+X, South(3):+Z, West(4):-X
+function tryForward(Vector3_current,currentFacing)
+    if(robot.forward()) then
+        if(currentFacing == 1) then
+            Vector3_current[3] = Vector3_current[3] - 1
+        elseif(currentFacing == 2) then
+            Vector3_current[1] = Vector3_current[1] + 1
+        elseif(currentFacing == 3) then
+            Vector3_current[3] = Vector3_current[3] + 1
+        else
+            Vector3_current[1] = Vector3_current[1] - 1
+        end
+    end
+    return Vector3_current
+end
+
+function tryBackward(Vector3_current,currentFacing)
+    if(robot.back()) then
+        if(currentFacing == 1) then
+            Vector3_current[3] = Vector3_current[3] + 1
+        elseif(currentFacing == 2) then
+            Vector3_current[1] = Vector3_current[1] - 1
+        elseif(currentFacing == 3) then
+            Vector3_current[3] = Vector3_current[3] - 1
+        else
+            Vector3_current[1] = Vector3_current[1] + 1
+        end
+    end
+    return Vector3_current
 end
 
 function robotCommon.getCoord()
@@ -186,5 +215,6 @@ function robotCommon.storeCoord(Vector3_current,facing)
         return false
     end
 end
+
 
 return robotCommon
