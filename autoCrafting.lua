@@ -54,6 +54,7 @@ function createRecipe()
             f:write(serialization.serialize(recipes) .. "\n")
             f:write(serialization.serialize(nameList))
             f:close()
+            print("Recipe Created...\n")
         else
             print("Error: Unable to open and write to /home/data/recipe")
         end
@@ -70,7 +71,7 @@ function craftFunction()
         tmpList = {}
         local counter = 1
         for key,value in pairs(nameList) do
-            if(string.find(key,searchStr,1,true) ~= nil) then
+            if(string.find(key,searchStr,1,true) ~= nil or string.find(key:lower(),searchStr,1,true) ~= nil) then
                 print("["..counter.."] "..key..": "..value)
                 table.insert(tmpList,value)
                 counter = counter + 1
@@ -79,6 +80,7 @@ function craftFunction()
         selection = tonumber(commonlib.input("Selection(-1 for cancel): "))
     until(selection ~=-1)
    craft(tmpList[selection])
+   print("Crafting Completed...\n")
 end
 
 function craft(itemName)
@@ -123,7 +125,6 @@ function craft(itemName)
     end
     robot.select(8)
     crafter.craft(1)
-    print("Crafting Completed...")
 end
 
 function craftSlotIndexToInternIndex(craftSlot)
@@ -171,7 +172,6 @@ while true do
         os.exit()
     end
 end
-
 
 
 
