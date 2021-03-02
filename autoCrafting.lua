@@ -18,11 +18,11 @@ local commonlib = require("common")
 local robot = require("robot")
 local side = require("sides")
 
---ingredient chest is currently hardcoded to be north
+--ingredient chest is currently hardcoded to be north(front)
 local recipes = {} --(Recipe)recipe["ItemName"] = {slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9}
 local nameList = {} --{nameList["Item translated name"] = {untranslated name:damage}}
 local nameListKeys ={} --{Item translated name}
-
+local args,options = shell.parse(...)
 
 
 function createRecipe()
@@ -141,25 +141,27 @@ end
 
 
 print("Initializing autocrafting system...")
-
-if(fs.exists("/home/data/recipe")) then
-    
-    print("reading stored record...")
-    local f = io.open("/home/data/recipe", "r")
-
-    if(f) then
-        recipes = serialization.unserialize(f:read("*l"))
-        nameList = serialization.unserialize(f:read())
-        f:close()
-    else
-        print("Error: Unable to open /home/data/recipe")
-    end
+if(options == "remote")
+    --TODO: remote mode,take orders from server
 else
-    print("Creating necessary files...")
-    fs.makeDirectory("/home/data")
-    local f = io.open("/home/data/recipe", "w")
-    f:close()
-end
+    if(fs.exists("/home/data/recipe")) then
+    
+        print("reading stored record...")
+        local f = io.open("/home/data/recipe", "r")
+
+        if(f) then
+            recipes = serialization.unserialize(f:read("*l"))
+            nameList = serialization.unserialize(f:read())
+            f:close()
+        else
+            print("Error: Unable to open /home/data/recipe")
+        end
+    else
+        print("Creating necessary files...")
+        fs.makeDirectory("/home/data")
+        local f = io.open("/home/data/recipe", "w")
+        f:close()
+    end
 
 while true do
     local command = commonlib.input("> ")
