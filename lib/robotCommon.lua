@@ -159,35 +159,67 @@ function robotCommon.turn(String_direction,currentFacing)
         error("Invalid Args passed to turn()")
     end
 end
+
 --North(1):-Z, East(2):+X, South(3):+Z, West(4):-X
-function tryForward(Vector3_current,currentFacing)
-    if(robot.forward()) then
-        if(currentFacing == 1) then
-            Vector3_current[3] = Vector3_current[3] - 1
-        elseif(currentFacing == 2) then
-            Vector3_current[1] = Vector3_current[1] + 1
-        elseif(currentFacing == 3) then
-            Vector3_current[3] = Vector3_current[3] + 1
+function robotCommon.tryForward(Vector3_current,currentFacing,bool_clearPath)
+    local failed = 0
+    while(failed < 3) do
+        if(robot.forward()) then
+            failed = 0
+            if(currentFacing == 1) then
+                Vector3_current[3] = Vector3_current[3] - 1
+            elseif(currentFacing == 2) then
+                Vector3_current[1] = Vector3_current[1] + 1
+            elseif(currentFacing == 3) then
+                Vector3_current[3] = Vector3_current[3] + 1
+            else
+                Vector3_current[1] = Vector3_current[1] - 1
+            end
+            break
+        elseif(bool_clearPath) then
+            robot.swing()
+            if(robot.forward()) then
+                failed = 0
+                if(currentFacing == 1) then
+                    Vector3_current[3] = Vector3_current[3] - 1
+                elseif(currentFacing == 2) then
+                    Vector3_current[1] = Vector3_current[1] + 1
+                elseif(currentFacing == 3) then
+                    Vector3_current[3] = Vector3_current[3] + 1
+                else
+                    Vector3_current[1] = Vector3_current[1] - 1
+                end
+                break
+            else
+                failed = failed + 1
+            end
         else
-            Vector3_current[1] = Vector3_current[1] - 1
+            failed = failed + 1
         end
     end
-    return Vector3_current
+    return Vector3_current,currentFacing
 end
 
-function tryBackward(Vector3_current,currentFacing)
-    if(robot.back()) then
-        if(currentFacing == 1) then
-            Vector3_current[3] = Vector3_current[3] + 1
-        elseif(currentFacing == 2) then
-            Vector3_current[1] = Vector3_current[1] - 1
-        elseif(currentFacing == 3) then
-            Vector3_current[3] = Vector3_current[3] - 1
+function robotCommon.tryBackward(Vector3_current,currentFacing)
+    local failed = 0
+    while(failed < 3) do
+        if(robot.back()) then
+            failed = 0
+            if(currentFacing == 1) then
+                Vector3_current[3] = Vector3_current[3] + 1
+            elseif(currentFacing == 2) then
+                Vector3_current[1] = Vector3_current[1] - 1
+            elseif(currentFacing == 3) then
+                Vector3_current[3] = Vector3_current[3] - 1
+            else
+                Vector3_current[1] = Vector3_current[1] + 1
+            end
+            break
         else
-            Vector3_current[1] = Vector3_current[1] + 1
+            failed = failed + 1
         end
     end
-    return Vector3_current
+    return Vector3_current,currentFacing
 end
 
 function robotCommon.getCoord()
