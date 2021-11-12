@@ -222,6 +222,34 @@ function robotCommon.tryBackward(Vector3_current,currentFacing)
     return Vector3_current,currentFacing
 end
 
+function robotCommon.tryUpward(Vector3_current,currentFacing)
+    local failed = 0
+    while(failed < 3) do
+        if(robot.up()) then
+            failed = 0
+            Vector3_current[2] = Vector3_current[2] + 1
+            break
+        else
+            failed = failed + 1
+        end
+    end
+    return Vector3_current,currentFacing
+end
+
+function robotCommon.tryDownward(Vector3_current,currentFacing)
+    local failed = 0
+    while(failed < 3) do
+        if(robot.down()) then
+            failed = 0
+            Vector3_current[2] = Vector3_current[2] - 1
+            break
+        else
+            failed = failed + 1
+        end
+    end
+    return Vector3_current,currentFacing
+end
+
 function robotCommon.getCoord()
     local f = io.open("/home/data/coords", "r")
 

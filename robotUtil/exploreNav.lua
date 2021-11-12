@@ -5,7 +5,7 @@ local navigation = require("navigation")
 local Vector3_current,facing = robotcommon.getCoord()
 
 while true do
-    local input = commonlib.input("Please enter f, b, l, r or exit to exit: ")
+    local input = commonlib.input("Please enter f, b, l, r, u, d or exit to exit: ")
     if input == "exit" then
         break
     else

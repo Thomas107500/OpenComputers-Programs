@@ -36,12 +36,12 @@ end
 function updateDB(Vector3_current)
     local content = ""
     local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",Vector3_current[1],Vector3_current[2],Vector3_current[3],"Air",0))
-    --for chunk in result do content = content..chunk end
-    --if(content == "Saved") then
-    --    print("Coords updated")
-    --else
-    --    print("Failed")
-    --end
+    for chunk in result do content = content..chunk end
+    if(content == "Saved") then
+        print("Coords updated")
+    else
+        print("Failed")
+    end
 end
 
 --f:forward, b:backward, r:right, l:left, u:up, d:down
@@ -61,9 +61,12 @@ function navigation.exploreMove(String_direction)
         facing = robotcommon.turn("r",facing)
         Vector3_current,facing = robotcommon.tryForward(Vector3_current,facing,false)
         updateDB(Vector3_current)
-    --elseif(String_direction == "u") then
-    --    Vector3_current,facing = robot.up()
-    --    updateDB(Vector3_current)    
+    elseif(String_direction == "u") then
+        Vector3_current,facing = robotcommon.tryUpward(Vector3_current,facing)
+        updateDB(Vector3_current)
+    elseif(String_direction == "d") then
+        Vector3_current,facing = robotcommon.tryDownward(Vector3_current,facing)
+        updateDB(Vector3_current)
     end
     robotcommon.storeCoord(Vector3_current,facing)
 end
