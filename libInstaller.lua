@@ -39,15 +39,17 @@ if(not fs.exists("/usr/lib/queue.lua") or options.u) then
 end
 
 print("Computer library installation completed...")
-io.write("Do you want to install robot based libraries? y/N")
+print("Do you want to install robot based libraries? y/N")
 local input = io.read()
 local result = false
 
 while true do
     if input == "y" then
-        return true
-    elseif input == "n" then
-        return false
+        result = true
+        break
+    elseif input == "n" or input == "" then
+        result = false
+        break
     else
         print("Invalid input, please only input y/n")
     end

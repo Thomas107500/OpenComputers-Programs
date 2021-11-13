@@ -33,9 +33,9 @@ function navigation.getPath(Vector3_current,Vector3_destination)
     return pathVectors
 end
 
-function updateDB(Vector3_current)
+local function updateDB(Vector3_current)
     local content = ""
-    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",Vector3_current[1],Vector3_current[2],Vector3_current[3],"Air",0))
+    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",Vector3_current[1],Vector3_current[2],Vector3_current[3],"minecraft:air",0))
     for chunk in result do content = content..chunk end
     if(content == "Saved") then
         print("Coords updated")
