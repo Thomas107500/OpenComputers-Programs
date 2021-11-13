@@ -40,7 +40,7 @@ if(not fs.exists("/usr/bin/mtcfg.lua") or options.u) then
     end
 end
 
-shell.execute("rc minitel enable")
 shell.execute("mtcfg --firstrun")
+shell.execute("rc minitel enable")
 
 print("Installation Complete...")
