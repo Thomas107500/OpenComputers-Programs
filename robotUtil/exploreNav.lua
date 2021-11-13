@@ -9,7 +9,7 @@ while true do
     if input == "exit" then
         break
     else
-        navigation.exploreMove(input)
+        Vector3_current,facing = navigation.exploreMove(input)
     end
 end
 

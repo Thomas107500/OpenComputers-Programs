@@ -46,29 +46,27 @@ end
 
 --f:forward, b:backward, r:right, l:left, u:up, d:down
 function navigation.exploreMove(String_direction)
+    
     local Vector3_current,facing = robotcommon.getCoord()
+    
     if(String_direction == "f") then
         Vector3_current,facing = robotcommon.tryForward(Vector3_current,facing,false)
-        updateDB(Vector3_current)
     elseif(String_direction == "b") then
         Vector3_current,facing = robotcommon.tryBackward(Vector3_current,facing)
-        updateDB(Vector3_current)
     elseif(String_direction == "l") then
         facing = robotcommon.turn("l",facing)
         Vector3_current,facing = robotcommon.tryForward(Vector3_current,facing,false)
-        updateDB(Vector3_current)
     elseif(String_direction == "r") then
         facing = robotcommon.turn("r",facing)
         Vector3_current,facing = robotcommon.tryForward(Vector3_current,facing,false)
-        updateDB(Vector3_current)
     elseif(String_direction == "u") then
         Vector3_current,facing = robotcommon.tryUpward(Vector3_current,facing)
-        updateDB(Vector3_current)
     elseif(String_direction == "d") then
         Vector3_current,facing = robotcommon.tryDownward(Vector3_current,facing)
-        updateDB(Vector3_current)
     end
-    robotcommon.storeCoord(Vector3_current,facing)
+    
+    updateDB(Vector3_current)
+    return Vector3_current,facing
 end
 
 --local result = internet.request("https://ocwebapi.thomas107500.repl.co/api/map/getPath?startX=0&startY=0&startZ=0&endX=0&endY=0&endZ=2")
