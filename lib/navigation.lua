@@ -35,7 +35,7 @@ end
 
 local function updateDB(String_world,Vector3_current)
     local content = ""
-    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?world=%s&X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",String_world,Vector3_current[1],Vector3_current[2],Vector3_current[3],"minecraft:air",0))
+    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?world=%s&X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",String_world,Vector3_current[1],Vector3_current[2],Vector3_current[3],"minecraft:air",0.0))
     for chunk in result do content = content..chunk end
     if(content == "Saved") then
         print("Coords updated")
