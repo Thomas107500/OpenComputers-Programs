@@ -7,8 +7,8 @@ local internet = require("internet")
 local robotcommon = require("robotCommon")
 local robot = require("robot")
 
-function navigation.getPath(Vector3_current,Vector3_destination)
-    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/getPath?startX=%d&startY=%d&startZ=%d&endX=%d&endY=%d&endZ=%d",Vector3_current[1],Vector3_current[2],Vector3_current[3],Vector3_destination[1],Vector3_destination[2],Vector3_destination[3]))
+function navigation.getPath(String_world,Vector3_current,Vector3_destination)
+    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/getPath?world=%s&startX=%d&startY=%d&startZ=%d&endX=%d&endY=%d&endZ=%d",String_world,Vector3_current[1],Vector3_current[2],Vector3_current[3],Vector3_destination[1],Vector3_destination[2],Vector3_destination[3]))
     local content = ""
     local strTable = {}
     local pathVectors = {}
@@ -33,9 +33,9 @@ function navigation.getPath(Vector3_current,Vector3_destination)
     return pathVectors
 end
 
-local function updateDB(Vector3_current)
+local function updateDB(String_world,Vector3_current)
     local content = ""
-    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",Vector3_current[1],Vector3_current[2],Vector3_current[3],"minecraft:air",0))
+    local result = internet.request(string.format("https://ocwebapi.thomas107500.repl.co/api/map/store?world=%s&X=%d&Y=%d&Z=%d&Block=%s&Hardness=%d",String_world,Vector3_current[1],Vector3_current[2],Vector3_current[3],"minecraft:air",0))
     for chunk in result do content = content..chunk end
     if(content == "Saved") then
         print("Coords updated")
@@ -45,7 +45,7 @@ local function updateDB(Vector3_current)
 end
 
 --f:forward, b:backward, r:right, l:left, u:up, d:down
-function navigation.exploreMove(String_direction)
+function navigation.exploreMove(String_world,String_direction)
     
     local Vector3_current,facing = robotcommon.getCoord()
     
@@ -65,7 +65,7 @@ function navigation.exploreMove(String_direction)
         Vector3_current,facing = robotcommon.tryDownward(Vector3_current,facing)
     end
     
-    updateDB(Vector3_current)
+    updateDB(String_world,Vector3_current)
     return Vector3_current,facing
 end
 
